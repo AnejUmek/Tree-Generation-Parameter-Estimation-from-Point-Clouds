@@ -4,7 +4,6 @@ import torch
 from pathlib import Path
 from bl_ext.blender_org.modular_tree.python_classes.resources.node_groups import distribute_leaves
 
-
 pointnet2 = bpy.data.texts["pointnet2.py"].as_module()
 utils = bpy.data.texts["utils.py"].as_module()
 constants = bpy.data.texts["constants.py"].as_module()
@@ -108,6 +107,17 @@ def calculate_parameters(point_cloud):
 def create_tree_from_parameters(parameters):
     
     point_cloud = bpy.context.active_object
+    """
+    mat_tree = bpy.data.materials.new("tree_material")
+    mat_tree.use_nodes = True
+    bsdf_tree = mat_tree.node_tree.nodes.get("Principled BSDF")
+    bsdf_tree.inputs["Base Color"].default_value = (0.2, 0.10, 0.0, 1.0)
+    
+    mat_leaf = bpy.data.materials.new("leaf_material")
+    mat_leaf.use_nodes = True
+    bsdf_leaf = mat_leaf.node_tree.nodes.get("Principled BSDF")
+    bsdf_leaf.inputs["Base Color"].default_value = (0.10, 0.5, 0.05, 1.0)
+    """
     
     tree_node_tree = bpy.data.node_groups.new(name = "Mtree", type = "mt_MtreeNodeTree")
     all_tree_nodes = utils.create_node_tree_setup(tree_node_tree, constants.tree_nodes_to_add, constants.tree_links_to_add)
@@ -118,12 +128,29 @@ def create_tree_from_parameters(parameters):
     tree.location = point_cloud.location.copy()
     tree.location.z -= 50
     
+    """
+    if tree.data.materials:
+        tree.data.materials[0] = mat_tree
+    else:
+        tree.data.materials.append(mat_tree)
+    """
+    
     # CREATE LEAF AND ADD IT TO THE TREE
     bpy.ops.mesh.primitive_plane_add(size=2, enter_editmode=False, align='WORLD', location=bpy.context.scene.cursor.location, scale=(1, 1, 1))
-
+    
     leaf = bpy.data.objects["Plane"]
     leaf.name = "leaf"
-    leaf.hide_viewport = True
+    
+    """
+    if leaf.data.materials:
+        leaf.data.materials[0] = mat_leaf
+    else:
+        leaf.data.materials.append(mat_leaf)
+    """
+        
+    # leaf.hide_viewport = True
+    
+    
     
     distribute_leaves(
         tree,

@@ -1,10 +1,10 @@
 #------------------------------------------------------------------#
 #   Credit: https://github.com/yanx27/Pointnet_Pointnet2_pytorch   #
 #------------------------------------------------------------------#
-
+import bpy
 import torch.nn as nn
 import torch.nn.functional as F
-pointnet2_utils = bpy.data.texts["pointnet2_utils"].as_module()
+pointnet2_utils = bpy.data.texts["pointnet2_utils.py"].as_module()
 
 class PointNet2(nn.Module):
     def __init__(self):

@@ -8,6 +8,18 @@ utils = bpy.data.texts["utils.py"].as_module()
 constants = bpy.data.texts["constants.py"].as_module()
 
 def create_point_cloud():
+    """
+    mat_tree = bpy.data.materials.new("tree_material")
+    mat_tree.use_nodes = True
+    bsdf_tree = mat_tree.node_tree.nodes.get("Principled BSDF")
+    bsdf_tree.inputs["Base Color"].default_value = (0.2, 0.10, 0.0, 1.0)
+    
+    mat_leaf = bpy.data.materials.new("leaf_material")
+    mat_leaf.use_nodes = True
+    bsdf_leaf = mat_leaf.node_tree.nodes.get("Principled BSDF")
+    bsdf_leaf.inputs["Base Color"].default_value = (0.10, 0.5, 0.05, 1.0)
+    """
+    
     # CREATE POINT CLOUD USING GEOMETRY NODES
     bpy.ops.mesh.primitive_cube_add(size=2, enter_editmode=False, align='WORLD', location=bpy.context.scene.cursor.location, scale=(1, 1, 1))
     
@@ -36,6 +48,12 @@ def create_point_cloud():
 
     tree = next(obj for obj in new_objects if obj.type == 'MESH')
     tree.location = bpy.context.scene.cursor.location.copy()
+    """
+    if tree.data.materials:
+        tree.data.materials[0] = mat_tree
+    else:
+        tree.data.materials.append(mat_tree)
+    """
     
     all_nodes["objectInfo"].inputs["Object"].default_value = tree
     
@@ -45,7 +63,13 @@ def create_point_cloud():
 
     leaf = bpy.data.objects["Plane"]
     leaf.name = "leaf"
-    leaf.hide_viewport = True
+    """
+    if leaf.data.materials:
+        leaf.data.materials[0] = mat_leaf
+    else:
+        leaf.data.materials.append(mat_leaf)
+    """
+    #leaf.hide_viewport = True
     
     distribute_leaves(
         tree,
