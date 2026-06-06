@@ -128,13 +128,6 @@ def create_tree_from_parameters(parameters):
     tree.location = point_cloud.location.copy()
     tree.location.z -= 50
     
-    """
-    if tree.data.materials:
-        tree.data.materials[0] = mat_tree
-    else:
-        tree.data.materials.append(mat_tree)
-    """
-    
     # CREATE LEAF AND ADD IT TO THE TREE
     bpy.ops.mesh.primitive_plane_add(size=2, enter_editmode=False, align='WORLD', location=bpy.context.scene.cursor.location, scale=(1, 1, 1))
     
@@ -142,6 +135,11 @@ def create_tree_from_parameters(parameters):
     leaf.name = "leaf"
     
     """
+    if tree.data.materials:
+        tree.data.materials[0] = mat_tree
+    else:
+        tree.data.materials.append(mat_tree)
+        
     if leaf.data.materials:
         leaf.data.materials[0] = mat_leaf
     else:

@@ -1,15 +1,4 @@
-bl_info = {
-    "name" : "Tree Parameter Estimation",
-    "description" : "This addon lets you create trees from a point cloud by estimating its parameters.",
-    "author" : "Anej Umek",
-    "version" : (1, 0),
-    "blender" : (3, 13, 9),
-    "location" : "View3D > Sidebar > Tree Parameter Estimation",
-    "warning" : "Need to have installed Modular Tree add-on",
-}
-
 import bpy
-import time
 
 create_point_cloud = bpy.data.texts["create_point_cloud.py"].as_module()
 estimate_parameters = bpy.data.texts["estimate_parameters.py"].as_module()

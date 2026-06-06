@@ -48,12 +48,6 @@ def create_point_cloud():
 
     tree = next(obj for obj in new_objects if obj.type == 'MESH')
     tree.location = bpy.context.scene.cursor.location.copy()
-    """
-    if tree.data.materials:
-        tree.data.materials[0] = mat_tree
-    else:
-        tree.data.materials.append(mat_tree)
-    """
     
     all_nodes["objectInfo"].inputs["Object"].default_value = tree
     
@@ -63,7 +57,13 @@ def create_point_cloud():
 
     leaf = bpy.data.objects["Plane"]
     leaf.name = "leaf"
+    
     """
+    if tree.data.materials:
+        tree.data.materials[0] = mat_tree
+    else:
+        tree.data.materials.append(mat_tree)
+        
     if leaf.data.materials:
         leaf.data.materials[0] = mat_leaf
     else:
